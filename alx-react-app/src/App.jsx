@@ -29,7 +29,7 @@ function App() {
                 <WelcomeMessage />
                 <Header />
                 <MainContent />
-                <UserProfile name="David" age="23" bio="Loves Reading and Dancing" />
+                <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
                 <Footer />
                 <p>
                     Edit <code>src/App.jsx</code> and save to test HMR
