@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
-import { UserProvider } from './context/UserContext';  
+import { UserProvider } from './components/UserContext';  
 import ProfilePage from './components/ProfilePage';
 
 function App() {
