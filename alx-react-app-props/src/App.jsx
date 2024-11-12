@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
-import { UserProvider } from './components/UserContext';  
+import { UserContext } from './components/UserContext';  
 import ProfilePage from './components/ProfilePage';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   const userData = { name: "Jane Doe", email: "jane.doe@example.com" };  
 
   return (
-    <UserProvider value={userData}> 
+    <UserContext.Provider value={userData}> 
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -36,7 +36,7 @@ function App() {
 
       
       <ProfilePage />
-    </UserProvider>
+    </UserContext.Provider>
   );
 }
 
