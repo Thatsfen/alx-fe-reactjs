@@ -1,13 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import React, { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import { UserProvider } from './context/UserContext';  
+import ProfilePage from './components/ProfilePage';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  const userData = { name: "Jane Doe", email: "jane.doe@example.com" };  
 
   return (
-    <>
+    <UserProvider value={userData}> 
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -28,8 +33,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
-  )
+
+      
+      <ProfilePage />
+    </UserProvider>
+  );
 }
 
-export default App
+export default App;
