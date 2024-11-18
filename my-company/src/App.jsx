@@ -1,28 +1,29 @@
-// src/App.js
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar'; // Import Navbar component
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+
+
 import Home from './components/Home';
 import About from './components/About';
 import Services from './components/Services';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+
 function App() {
   return (
-    <>
-      <Navbar />  {/* Add the Navbar here */}
+    <Router>
       
-      <main>
+      <Navbar />
+
+      <div className="App">
         <Routes>
+          
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        <Footer />
-      </main>
-
-      
-    </>
+      </div>
+    </Router>
   );
 }
 
