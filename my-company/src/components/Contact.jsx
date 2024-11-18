@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// src/Contact.jsx
+import { useState } from 'react';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ function Contact() {
   };
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
+    <div style={{ padding: '20px' }}>
       <h1>Contact Us</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -26,7 +27,7 @@ function Contact() {
           placeholder="Your Name"
           value={formData.name}
           onChange={handleChange}
-          style={styles.input}
+          style={{ display: 'block', margin: '10px 0' }}
         />
         <input
           type="email"
@@ -34,49 +35,19 @@ function Contact() {
           placeholder="Your Email"
           value={formData.email}
           onChange={handleChange}
-          style={styles.input}
+          style={{ display: 'block', margin: '10px 0' }}
         />
         <textarea
           name="message"
           placeholder="Your Message"
           value={formData.message}
           onChange={handleChange}
-          style={styles.textarea}
+          style={{ display: 'block', margin: '10px 0' }}
         />
-        <button type="submit" style={styles.button}>Send Message</button>
+        <button type="submit">Send Message</button>
       </form>
     </div>
   );
 }
-
-const styles = {
-  input: {
-    display: 'block',
-    margin: '10px 0',
-    padding: '10px',
-    width: '100%',
-    maxWidth: '300px',
-    borderRadius: '5px',
-    border: '1px solid #ccc'
-  },
-  textarea: {
-    display: 'block',
-    margin: '10px 0',
-    padding: '10px',
-    width: '100%',
-    maxWidth: '300px',
-    height: '100px',
-    borderRadius: '5px',
-    border: '1px solid #ccc'
-  },
-  button: {
-    padding: '10px 20px',
-    backgroundColor: '#333',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer'
-  }
-};
 
 export default Contact;
