@@ -5,6 +5,7 @@ import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
+import { useRecipeStore } from './components/recipeStore';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <h2>Recipe List</h2>
             <RecipeList /> 
           </section>
+      
         </main>
 
         
@@ -42,6 +44,9 @@ function App() {
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
           <Route path="/edit-recipe/:id" element={<EditRecipeForm />} />
+          <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
+
+   
         </Routes>
       </div>
     </Router>
