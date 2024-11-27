@@ -1,22 +1,33 @@
-// src/components/RecipeList.jsx
 import React from 'react';
-import useRecipeStore from './recipeStore';
+import { useRecipeStore } from './recipeStore';
+import SearchBar from './SearchBar';
+import RecipeItem from './RecipeItem';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
+  const { filteredRecipes, filterRecipes } = useRecipeStore((state) => ({
+    filteredRecipes: state.filteredRecipes,
+    filterRecipes: state.filterRecipes,
+  }));
+
+
+  React.useEffect(() => {
+    filterRecipes();
+  }, [filterRecipes]);
 
   return (
     <div>
-      {recipes.length > 0 ? (
-        recipes.map((recipe) => (
-          <div key={recipe.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-          </div>
-        ))
-      ) : (
-        <p>No recipes added yet!</p>
-      )}
+      <SearchBar /> 
+      <ul>
+        {filteredRecipes.length > 0 ? (
+          filteredRecipes.map((recipe) => (
+            <><li key={recipe.id}>
+              {recipe.title}
+            </li><RecipeItem key={recipe.id} recipe={recipe} /></>
+          ))
+        ) : (
+          <p>No recipes found</p> 
+        )}
+      </ul>
     </div>
   );
 };
