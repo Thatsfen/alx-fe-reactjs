@@ -11,7 +11,6 @@ const EditRecipeForm = ({ recipeId }) => {
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
   const navigate = useNavigate();
 
-  // Populate the form fields if recipe is found
   useEffect(() => {
     if (recipe) {
       setTitle(recipe.title);
@@ -19,15 +18,14 @@ const EditRecipeForm = ({ recipeId }) => {
     }
   }, [recipe]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (recipe) {
       updateRecipe(recipe.id, { title, description });
-      navigate(`/recipe/${recipe.id}`); // Redirect to the recipe details page after update
+      navigate(`/recipe/${recipe.id}`);
     }
   };
 
-  // Handle case when recipe is not found
   if (!recipe) {
     return <p>Recipe not found</p>;
   }
@@ -37,12 +35,12 @@ const EditRecipeForm = ({ recipeId }) => {
       <input
         type="text"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(event) => setTitle(event.target.value)}
         placeholder="Recipe Title"
       />
       <textarea
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={(event) => setDescription(event.target.value)}
         placeholder="Recipe Description"
       />
       <button type="submit">Update Recipe</button>
@@ -51,5 +49,3 @@ const EditRecipeForm = ({ recipeId }) => {
 };
 
 export default EditRecipeForm;
-
-
