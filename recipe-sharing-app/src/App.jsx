@@ -5,7 +5,9 @@ import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
-import { useRecipeStore } from './components/recipeStore';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
+
 
 function App() {
   return (
@@ -30,9 +32,12 @@ function App() {
           <section style={{ marginBottom: '30px' }}>
             <h2>Add a New Recipe</h2>
             <AddRecipeForm /> 
-          </section>
+            <FavoritesList />
+            <RecommendationsList />
+            </section>
 
-          <section>
+
+            <section>
             <h2>Recipe List</h2>
             <RecipeList /> 
           </section>
@@ -44,9 +49,6 @@ function App() {
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
           <Route path="/edit-recipe/:id" element={<EditRecipeForm />} />
-          <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
-
-   
         </Routes>
       </div>
     </Router>
