@@ -1,17 +1,19 @@
+// src/components/Login.jsx
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = ({ login }) => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    setIsAuthenticated(true);
-    navigate('/profile'); // Redirect to profile after login
+    login(); // Authenticate the user
+    navigate('/'); // Redirect to home after login
   };
 
   return (
     <div>
       <h2>Login Page</h2>
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin}>Log In</button>
     </div>
   );
 };

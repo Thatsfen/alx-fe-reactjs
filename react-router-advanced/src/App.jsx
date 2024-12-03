@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import ProfileDetails from './components/ProfileDetails';
 import ProfileSettings from './components/ProfileSettings';
@@ -6,6 +5,7 @@ import Profile from './components/Profile';
 import Login from './components/Login';
 import { useParams } from 'react-router-dom';
 import BlogPost from './components/BlogPost';
+import useAuth from './hooks/useAuth';
 
 const Home = () => <h2>Home Page</h2>;
 const About = () => <h2>About Page</h2>;
@@ -24,16 +24,22 @@ const ProtectedRoute = ({ children, isAuthenticated }) => {
 };
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  return (
+  const { isAuthenticated, login, logout } = useAuth();
+  eturn (
     <Router>
-      <nav>
-        <Link to="/">Home</Link> | 
-        <Link to="/about">About</Link> | 
-        <Link to="/profile">Profile</Link> | 
-        <Link to="/login">Login</Link>
-      </nav>
+      <div>
+        {/* Navigation Links */}
+        <nav>
+          <Link to="/">Home</Link> | 
+          <Link to="/about">About</Link> | 
+          <Link to="/profile">Profile</Link> | 
+          {isAuthenticated ? (
+            <button onClick={logout}>Log Out</button>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
+        </nav>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -42,7 +48,7 @@ const App = () => {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute >
               <Profile />
             </ProtectedRoute>
           }
@@ -55,11 +61,12 @@ const App = () => {
         {/* Dynamic Route for Blog Post */}
         <Route path="/blog/:id" element={<BlogPost />} />  {/* New dynamic route */}
 
-        {/* Login Page */}
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+       {/* Login Page */}
+       <Route path="/login" element={<Login login={login} />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </div>
     </Router>
   );
 };
