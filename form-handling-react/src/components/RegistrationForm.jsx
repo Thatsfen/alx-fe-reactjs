@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const RegistrationForm = () => {
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,8 +9,18 @@ const RegistrationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!username || !email || !password) {
-      setErrors('All fields are required.');
+    if (!username) {
+      setErrors('Username is required.');
+      return;
+    }
+
+    if (!email) {
+      setErrors('Email is required.');
+      return;
+    }
+
+    if (!password) {
+      setErrors('Password is required.');
       return;
     }
 
@@ -29,8 +38,8 @@ const RegistrationForm = () => {
             type="text"
             id="username"
             name="username"
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div>
@@ -39,8 +48,8 @@ const RegistrationForm = () => {
             type="email"
             id="email"
             name="email"
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -49,8 +58,8 @@ const RegistrationForm = () => {
             type="password"
             id="password"
             name="password"
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         {errors && <p style={{ color: 'red' }}>{errors}</p>}
