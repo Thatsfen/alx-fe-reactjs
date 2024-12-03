@@ -1,33 +1,31 @@
 import React, { useState } from 'react';
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState('');
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { username, email, password } = formData;
 
-    if (!username || !email || !password) {
-      setErrors('All fields are required.');
+    if (!username) {
+      setErrors('Username is required.');
+      return;
+    }
+
+    if (!email) {
+      setErrors('Email is required.');
+      return;
+    }
+
+    if (!password) {
+      setErrors('Password is required.');
       return;
     }
 
     setErrors('');
-    console.log('Form submitted:', formData);
+    console.log('Form submitted:', { username, email, password });
   };
 
   return (
@@ -40,8 +38,8 @@ const RegistrationForm = () => {
             type="text"
             id="username"
             name="username"
-            value={formData.username} // Added value binding
-            onChange={handleChange}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div>
@@ -50,8 +48,8 @@ const RegistrationForm = () => {
             type="email"
             id="email"
             name="email"
-            value={formData.email} // Added value binding
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -60,8 +58,8 @@ const RegistrationForm = () => {
             type="password"
             id="password"
             name="password"
-            value={formData.password} // Added value binding
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         {errors && <p style={{ color: 'red' }}>{errors}</p>}
