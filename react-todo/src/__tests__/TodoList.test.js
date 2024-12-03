@@ -25,6 +25,7 @@ describe('TodoList Component', () => {
     fireEvent.click(button);
 
     expect(addTodo).toHaveBeenCalledWith('New Todo');
+    expect(screen.getByText('New Todo')).toBeInTheDocument();
   });
 
   test('toggles todo completion status', () => {
@@ -36,11 +37,11 @@ describe('TodoList Component', () => {
 
     const todo = screen.getByText(/Learn React/i);
     
-    expect(todo).not.toHaveClass('completed');
+    expect(todo).not.toHaveClass('completed'); // Ensure it's not completed initially
 
-    fireEvent.click(todo);
+    fireEvent.click(todo); // Click to toggle completion
 
-    expect(todo).toHaveClass('completed');
+    expect(todo).toHaveClass('completed'); // Ensure it's marked as completed
   });
 
   test('deletes a todo', () => {
@@ -53,8 +54,9 @@ describe('TodoList Component', () => {
 
     const deleteButton = screen.getByText(/Delete/i);
 
-    fireEvent.click(deleteButton);
+    fireEvent.click(deleteButton); // Simulate clicking the delete button
 
     expect(deleteTodo).toHaveBeenCalledWith(1);
+    expect(deleteTodo).toHaveBeenCalledTimes(1); // Ensure it's called only once
   });
 });
