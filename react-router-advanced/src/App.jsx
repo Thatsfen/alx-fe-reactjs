@@ -5,6 +5,7 @@ import ProfileSettings from './components/ProfileSettings';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import { useParams } from 'react-router-dom';
+import BlogPost from './components/BlogPost';
 
 const Home = () => <h2>Home Page</h2>;
 const About = () => <h2>About Page</h2>;
@@ -51,6 +52,8 @@ const App = () => {
         </Route>
 
         <Route path="/user/:username" element={<UserProfile />} />
+        {/* Dynamic Route for Blog Post */}
+        <Route path="/blog/:id" element={<BlogPost />} />  {/* New dynamic route */}
 
         {/* Login Page */}
         <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
