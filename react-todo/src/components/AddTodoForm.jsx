@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
-const AddTodoForm = ({ addTodo }) => {
-  const [text, setText] = useState('');
+type AddTodoFormProps = {
+  addTodo: (text: string) => void;
+};
 
-  const handleSubmit = (e) => {
+const AddTodoForm: React.FC<AddTodoFormProps> = ({ addTodo }) => {
+  const [text, setText] = useState<string>('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text) {
       addTodo(text);
