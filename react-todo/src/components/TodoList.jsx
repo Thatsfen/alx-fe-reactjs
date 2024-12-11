@@ -1,64 +1,59 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import TodoList from '../TodoList';
+import React, { useState } from 'react';
+import AddTodoForm from './AddTodoForm';
 
+// Define the type for a Todo item
 type Todo = {
   id: number;
   text: string;
   completed: boolean;
 };
 
-describe('TodoList Component', () => {
-  const mockToggleTodo = jest.fn();
-  const mockDeleteTodo = jest.fn();
+const TodoList: React.FC = () => {
+  const [todos, setTodos] = useState<Todo[]>([
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Write tests', completed: true },
+  ]);
 
-  test('renders TodoList with initial todos', () => {
-    const todos: Todo[] = [
-      { id: 1, text: 'Learn React', completed: false },
-      { id: 2, text: 'Write tests', completed: true },
-    ];
+  const addTodo = (text: string) => {
+    const newTodo: Todo = {
+      id: todos.length ? todos[todos.length - 1].id + 1 : 1,
+      text,
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+  };
 
-    render(<TodoList todos={todos} toggleTodo={mockToggleTodo} deleteTodo={mockDeleteTodo} />);
+  const toggleTodo = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
 
-    expect(screen.getByText(/Learn React/i)).toBeInTheDocument();
-    expect(screen.getByText(/Write tests/i)).toBeInTheDocument();
-  });
+  const deleteTodo = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
-  test('allows toggling a todo', () => {
-    const todos: Todo[] = [
-      { id: 1, text: 'Learn React', completed: false },
-    ];
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <AddTodoForm addTodo={addTodo} />
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+            <span
+              onClick={() => toggleTodo(todo.id)}
+              style={{ cursor: 'pointer', marginRight: '10px' }}
+            >
+              {todo.text}
+            </span>
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-    render(<TodoList todos={todos} toggleTodo={mockToggleTodo} deleteTodo={mockDeleteTodo} />);
-
-    const todoElement = screen.getByText(/Learn React/i);
-    fireEvent.click(todoElement);
-
-    expect(mockToggleTodo).toHaveBeenCalledWith(1);
-  });
-
-  test('allows deleting a todo', () => {
-    const todos: Todo[] = [
-      { id: 1, text: 'Learn React', completed: false },
-    ];
-
-    render(<TodoList todos={todos} toggleTodo={mockToggleTodo} deleteTodo={mockDeleteTodo} />);
-
-    const deleteButton = screen.getByText(/Delete/i);
-    fireEvent.click(deleteButton);
-
-    expect(mockDeleteTodo).toHaveBeenCalledWith(1);
-  });
-
-  test('shows completed todos with line-through style', () => {
-    const todos: Todo[] = [
-      { id: 1, text: 'Learn React', completed: true },
-    ];
-
-    render(<TodoList todos={todos} toggleTodo={mockToggleTodo} deleteTodo={mockDeleteTodo} />);
-
-    const todoElement = screen.getByText(/Learn React/i);
-    expect(todoElement).toHaveStyle('text-decoration: line-through');
-  });
-});
+export default TodoList;
