@@ -5,7 +5,7 @@ import InputField from './InputField';
 const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (event) => {
@@ -21,8 +21,8 @@ const AddRecipeForm = () => {
       newErrors.ingredients = 'Ingredients are required';
     }
 
-    if (!instructions.trim()) {
-      newErrors.instructions = 'Instructions are required';
+    if (!steps.trim()) {
+      newErrors.steps = 'Steps are required';
     }
 
     if (ingredients.trim().split('\n').length < 2) {
@@ -34,13 +34,13 @@ const AddRecipeForm = () => {
       return;
     }
 
-    
-    console.log({ title, ingredients, instructions });
+    // Log the recipe details
+    console.log({ title, ingredients, steps });
 
- 
+    // Clear the form
     setTitle('');
     setIngredients('');
-    setInstructions('');
+    setSteps('');
     setErrors({});
   };
 
@@ -67,13 +67,13 @@ const AddRecipeForm = () => {
         />
 
         <InputField
-          label="Instructions"
-          id="instructions"
+          label="Steps"
+          id="steps"
           type="textarea"
           rows={6}
-          value={instructions}
-          onChange={(e) => setInstructions(e.target.value)}
-          error={errors.instructions}
+          value={steps}
+          onChange={(e) => setSteps(e.target.value)}
+          error={errors.steps}
         />
 
         <Button onClick={handleSubmit}>Add Recipe</Button>
