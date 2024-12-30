@@ -1,32 +1,27 @@
-import React from 'react';
-
-const InputField = ({ 
-  label, 
-  type = 'text', 
-  id, 
-  value, 
-  onChange, 
-  error, 
-  placeholder 
-}) => {
+const InputField = ({ label, id, type, value, onChange, error, rows }) => {
   return (
-    <div className="mb-4">
+    <div>
       <label htmlFor={id} className="block text-sm font-medium text-gray-700">
         {label}
       </label>
-      <input 
-        type={type} 
-        id={id} 
-        className={`mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-          error ? 'border-red-500' : ''
-        }`} 
-        value={value} 
-        onChange={onChange} 
-        placeholder={placeholder} 
-      />
-      {error && (
-        <p className="text-red-500 mt-1 text-sm">{error}</p>
+      {type === 'textarea' ? (
+        <textarea
+          id={id}
+          rows={rows}
+          value={value}
+          onChange={onChange}
+          className={`mt-1 block w-full rounded-md shadow-sm ${error ? 'border-red-500' : 'border-gray-300'} focus:ring-blue-500 focus:border-blue-500`}
+        />
+      ) : (
+        <input
+          type={type}
+          id={id}
+          value={value}
+          onChange={onChange}
+          className={`mt-1 block w-full rounded-md shadow-sm ${error ? 'border-red-500' : 'border-gray-300'} focus:ring-blue-500 focus:border-blue-500`}
+        />
       )}
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>
   );
 };
