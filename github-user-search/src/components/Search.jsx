@@ -22,7 +22,7 @@ const Search = () => {
         setUserData(data); // Set the user data on success
         setLoading(false); // Set loading to false
       } catch (err) {
-        setError('Looks like we can\'t find the user'); // Set error message
+        setError("Looks like we can't find the user"); // Set error message
         setLoading(false); // Set loading to false even on error
       }
     }
