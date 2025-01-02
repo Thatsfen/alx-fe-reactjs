@@ -22,7 +22,7 @@ const Search = () => {
         setUserData(data); // Set the user data on success
         setLoading(false); // Set loading to false
       } catch (err) {
-        setError('Looks like we can\'t find the user');
+        setError('Looks like we can\'t find the user'); // Set error message
         setLoading(false); // Set loading to false even on error
       }
     }
@@ -46,12 +46,12 @@ const Search = () => {
       
       {userData && !loading && !error && (
         <div>
-          <h2>{userData.name}</h2>
-          <p>{userData.bio}</p>
+          <h2>{userData.login}</h2> {/* Display GitHub username (login) */}
+          <p>{userData.bio || 'No bio available'}</p> {/* Display user bio if available */}
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             Visit Profile
           </a>
-          <img src={userData.avatar_url} alt={`${userData.name}'s avatar`} width="100" />
+          <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
         </div>
       )}
     </div>
