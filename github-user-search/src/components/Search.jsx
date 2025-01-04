@@ -5,7 +5,7 @@ const Search = () => {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false); // Use boolean for simplicity
 
   const handleInputChange = (e) => {
     setUsername(e.target.value);
@@ -15,14 +15,14 @@ const Search = () => {
     e.preventDefault();
     if (username.trim()) {
       setLoading(true);
-      setError(null);
+      setError(false);
       setUserData(null);
       try {
         const data = await fetchUserData(username);
         setUserData(data);
         setLoading(false);
       } catch (err) {
-        setError("Looks like we can't find the user");
+        setError(true); // Set error state to true
         setLoading(false);
       }
     }
@@ -40,15 +40,9 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
-      {/* Show Loading State */}
+      {/* Explicit hardcoding of error message */}
       {loading && <p>Loading...</p>}
-
-      {/* Show Error State (explicit message) */}
-      {error && error === "Looks like we can't find the user" && (
-        <p style={{ color: 'red' }}>Looks like we can't find the user</p>
-      )}
-
-      {/* Show User Data */}
+      {error && <p style={{ color: 'red' }}>Looks like we can't find the user</p>} {/* Hardcoded error */}
       {userData && (
         <div>
           <h2>{userData.login}</h2>
