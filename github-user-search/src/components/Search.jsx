@@ -5,25 +5,33 @@ const Search = () => {
   const [username, setUsername] = useState('');
   const [location, setLocation] = useState('');
   const [minRepos, setMinRepos] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1); 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(false);
-    setUserData(null);
-
+    setUsers([]);
+    setCurrentPage(1); 
     try {
-      const data = await fetchUserData(username, location, minRepos); 
-      if (location && data.location?.toLowerCase() !== location.toLowerCase()) {
-        throw new Error('Location mismatch');
-      }
-      if (minRepos && data.public_repos < parseInt(minRepos, 10)) {
-        throw new Error('Minimum repositories not met');
-      }
-      setUserData(data);
+      const data = await fetchUserData(username, location, minRepos, 1); page
+      setUsers(data.items); 
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadMoreResults = async () => {
+    const nextPage = currentPage + 1;
+    setLoading(true);
+    try {
+      const data = await fetchUserData(username, location, minRepos, nextPage);
+      setUsers((prevUsers) => [...prevUsers, ...data.items]); // Append new results to existing ones
+      setCurrentPage(nextPage);
     } catch (err) {
       setError(true);
     } finally {
@@ -90,30 +98,48 @@ const Search = () => {
       {loading && <p className="mt-4 text-blue-500">Loading...</p>}
       {error && (
         <p className="mt-4 text-red-500">
-          Looks like we can't find the user or they don't meet the criteria.
+          Looks like we cant find any users
         </p>
       )}
-      {userData && (
-        <div className="mt-6 w-full max-w-md bg-gray-100 shadow-md rounded p-4">
-          <h2 className="text-lg font-bold">{userData.login}</h2>
-          <p>{userData.bio || 'No bio available'}</p>
-          <p>
-            Location: {userData.location || 'No location available'}
-          </p>
-          <p>Repositories: {userData.public_repos}</p>
-          <a
-            href={userData.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
+
+    
+      {users.length > 0 && (
+        <div className="mt-6 w-full max-w-md">
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className="bg-gray-100 shadow-md rounded p-4 mb-4"
+            >
+              <div className="flex items-center space-x-4">
+                <img
+                  src={user.avatar_url}
+                  alt={`${user.login}'s avatar`}
+                  className="w-16 h-16 rounded-full"
+                />
+                <div>
+                  <h2 className="text-lg font-bold">{user.login}</h2>
+                  <p>Location: {user.location || 'No location available'}</p>
+                  <p>Repositories: {user.public_repos || 'Unknown'}</p>
+                  <a
+                    href={user.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Visit Profile
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+
+         
+          <button
+            onClick={loadMoreResults}
+            className="w-full bg-gray-300 text-black py-2 rounded hover:bg-gray-400 transition"
           >
-            Visit Profile
-          </a>
-          <img
-            src={userData.avatar_url}
-            alt={`${userData.login}'s avatar`}
-            className="mt-4 w-24 h-24 rounded-full"
-          />
+            Load More
+          </button>
         </div>
       )}
     </div>
