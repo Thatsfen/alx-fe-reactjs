@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const BASE_URL = 'https://api.github.com';
+
 const fetchUserData = async (username, location, minRepos, page = 1) => {
   try {
     let query = `q=${username}`;
@@ -7,7 +9,8 @@ const fetchUserData = async (username, location, minRepos, page = 1) => {
     if (minRepos) query += `+repos:>=${minRepos}`;
     query += `&page=${page}`;
 
-    const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
+    // Direct reference to the GitHub search users API
+    const response = await axios.get('https://api.github.com/search/users?' + query);
     const users = response.data.items;
 
     if (users && users.length > 0) {
@@ -16,6 +19,7 @@ const fetchUserData = async (username, location, minRepos, page = 1) => {
       throw new Error('No users found');
     }
   } catch (error) {
+    console.error(error);  
     throw new Error(error.response?.data?.message || 'Failed to fetch user data');
   }
 };
