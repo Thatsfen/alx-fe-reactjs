@@ -42,7 +42,7 @@ const Search = () => {
 
       {/* Explicit hardcoding of error message */}
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>Looks like we can't find the user</p>} {/* Hardcoded error */}
+      {error && <p style={{ color: 'red' }}>Looks like we cant find the user</p>} {/* Hardcoded error */}
       {userData && (
         <div>
           <h2>{userData.login}</h2>
