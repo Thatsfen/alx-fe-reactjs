@@ -7,8 +7,7 @@ const fetchUserData = async (username, location, minRepos, page = 1) => {
     if (minRepos) query += `+repos:>=${minRepos}`;
     query += `&page=${page}`;
 
-    const apiUrl = `https://api.github.com/search/users?${query}`;
-    const response = await axios.get(apiUrl);
+    const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
     const users = response.data.items;
 
     if (users && users.length > 0) {
