@@ -8,16 +8,17 @@ const Search = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [currentPage, setCurrentPage] = useState(1);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(false);
     setUsers([]);
-    setCurrentPage(1); 
+    setCurrentPage(1);  
     try {
-      const data = await fetchUserData(username, location, minRepos, 1); page
-      setUsers(data.items); 
+      const data = await fetchUserData(username, location, minRepos, 1);
+      setUsers(data); 
     } catch (err) {
       setError(true);
     } finally {
@@ -30,7 +31,7 @@ const Search = () => {
     setLoading(true);
     try {
       const data = await fetchUserData(username, location, minRepos, nextPage);
-      setUsers((prevUsers) => [...prevUsers, ...data.items]); // Append new results to existing ones
+      setUsers((prevUsers) => [...prevUsers, ...data]); 
       setCurrentPage(nextPage);
     } catch (err) {
       setError(true);
@@ -98,11 +99,10 @@ const Search = () => {
       {loading && <p className="mt-4 text-blue-500">Loading...</p>}
       {error && (
         <p className="mt-4 text-red-500">
-          Looks like we cant find any users
+          Looks like we can't find any users
         </p>
       )}
 
-    
       {users.length > 0 && (
         <div className="mt-6 w-full max-w-md">
           {users.map((user) => (
@@ -133,7 +133,6 @@ const Search = () => {
             </div>
           ))}
 
-         
           <button
             onClick={loadMoreResults}
             className="w-full bg-gray-300 text-black py-2 rounded hover:bg-gray-400 transition"
