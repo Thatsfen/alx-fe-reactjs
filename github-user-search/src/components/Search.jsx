@@ -16,7 +16,7 @@ const Search = () => {
     setUserData(null);
 
     try {
-      const data = await fetchUserData(username); // Modify API logic later for additional filters
+      const data = await fetchUserData(username, location, minRepos); 
       if (location && data.location?.toLowerCase() !== location.toLowerCase()) {
         throw new Error('Location mismatch');
       }
