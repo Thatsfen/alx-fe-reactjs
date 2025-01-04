@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import fetchUserData from '../services/githubService'; // Correct import path
+import fetchUserData from '../services/githubService'; // Adjust path as needed
 
 const Search = () => {
   const [username, setUsername] = useState('');
@@ -14,16 +14,16 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (username.trim()) {
-      setLoading(true); // Set loading state to true
-      setError(null); // Reset any previous errors
-      setUserData(null); // Clear previous user data
+      setLoading(true);
+      setError(null);
+      setUserData(null);
       try {
         const data = await fetchUserData(username);
-        setUserData(data); // Set the user data on success
-        setLoading(false); // Set loading to false
+        setUserData(data);
+        setLoading(false);
       } catch (err) {
-        setError("Looks like we can't find the user"); // Set error message
-        setLoading(false); // Set loading to false even on error
+        setError("Looks like we can't find the user");
+        setLoading(false);
       }
     }
   };
@@ -40,14 +40,19 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
-      {loading && <p>Loading...</p>} {/* Display Loading message while fetching */}
-      
-      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
-      
-      {userData && !loading && !error && (
+      {/* Show Loading State */}
+      {loading && <p>Loading...</p>}
+
+      {/* Show Error State (explicit message) */}
+      {error && error === "Looks like we can't find the user" && (
+        <p style={{ color: 'red' }}>Looks like we can't find the user</p>
+      )}
+
+      {/* Show User Data */}
+      {userData && (
         <div>
-          <h2>{userData.login}</h2> {/* Display GitHub username (login) */}
-          <p>{userData.bio || 'No bio available'}</p> {/* Display user bio if available */}
+          <h2>{userData.login}</h2>
+          <p>{userData.bio || 'No bio available'}</p>
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             Visit Profile
           </a>
