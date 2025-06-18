@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import fetchUserData from './services/githubService';
 import Search from './components/Search';
-import Header from './components/header';
+import Header from './components/Header';
 import ResultsPage from './components/ResultsPage';
 import './index.css';
 
